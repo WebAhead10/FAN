@@ -3,6 +3,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const { STATUS_CODES } = require("http");
+const { Script } = require("vm");
 
 const PORT = process.env.PORT || 3000;
 const SECRET = "nkA$SD89&&282hd";
@@ -51,7 +52,11 @@ server.get("/log-in", (req, res) => {
   `);
 });
 //array of emails
-const emails = ["nida.abusneineh@gmail.com", "adan.saada11@gmail.com"];
+const emails = [
+  "nida.abusneineh@gmail.com",
+  "adan.saada11@gmail.com",
+  "fadi_makhoul1@hotmail.com ",
+];
 
 server.post("/log-in", (req, res) => {
   const email = req.body.email;
@@ -60,7 +65,10 @@ server.post("/log-in", (req, res) => {
     res.cookie("user", token, { maxAge: 600000 });
     res.redirect("/profile");
   } else {
-    res.end("please write a correct email");
+    res.send(`
+    <h1>Please Enter a correct email</h1>
+    <a href="/log-in">Try again</a>
+  `);
   }
 });
 
