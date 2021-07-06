@@ -11,11 +11,11 @@ const server = express();
 
 server.use(cookieParser());
 server.use(express.urlencoded());
-
+server.use(express.static("public"));
 
 server.use((req, res, next) => {
   const token = req.cookies.user;
- 
+
   if (token) {
     const user = jwt.verify(token, SECRET);
     req.user = user;
@@ -26,7 +26,9 @@ server.use((req, res, next) => {
 server.get("/", (req, res) => {
   const user = req.user;
   if (user) {
-    res.send(`<h1>Hello ${user.email}</h1><a href="/log-out">Log out</a>`);
+    res.send(
+      `<h1 class="h">Hello ${user.email}</h1><a href="/log-out">Log out</a>`
+    );
   } else {
     res.send(`
     <body>
@@ -43,16 +45,23 @@ server.get("/log-in", (req, res) => {
     <form action="/log-in" method="POST">
       <label for="email">Email</email>
       <input type="email" id="email" name="email">
-      
+     
     </form>
+ 
   `);
 });
+//array of emails
+const emails = ["nida.abusneineh@gmail.com", "adan.saada11@gmail.com"];
 
 server.post("/log-in", (req, res) => {
   const email = req.body.email;
-  const token = jwt.sign({ email }, SECRET);
-  res.cookie("user", token, { maxAge: 600000 });
-  res.redirect("/profile");
+  if (emails.includes(email)) {
+    const token = jwt.sign({ email }, SECRET);
+    res.cookie("user", token, { maxAge: 600000 });
+    res.redirect("/profile");
+  } else {
+    res.end("please write a correct email");
+  }
 });
 
 server.get("/log-out", (req, res) => {
@@ -74,7 +83,7 @@ function checkAuth(req, res, next) {
 
 server.get("/profile", checkAuth, (req, res) => {
   const user = req.user;
-  res.send(`<h1>Hello ${user.email}</h1>
+  res.send(`<link rel="stylesheet" href="/style.css"> <h1 class="h">Hello ${user.email}</h1>
   `);
 });
 
