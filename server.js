@@ -104,26 +104,45 @@ server.get("/profiles", checkAuth, (req, res) => {
   `);
 });
 
-
 server.get("/profiles/adan", checkAuth, (req, res) => {
-  res.send(`<h1>Adan's Profile</h1>
-  <a href="/profiles">Back to profiles</a> <br>
-  <a href="/log-out">Log out</a>
-  `)
+  res.send(`<link rel="stylesheet" href="/adan-style.css"><body class="nida"><h1 class="h1">Adan's Profile</h1>
+  <h2 class="h2">Profile Pic</h2><div class="div"> <img class="img"></img>
+ 
+ </div>
+
+ <a class="a" href="/adan's-posts">My Posts</a> <br>
+ <br>
+  <a class="a" href="/profiles">Back to profiles</a> <br>
+  <a class="a" href="/log-out">Log out</a>
+  `);
 });
 
 server.get("/profiles/fadi", checkAuth, (req, res) => {
-  res.send(`<h1>Fadi's Profile</h1>
-  <a href="/profiles">Back to profiles</a> <br>
-  <a href="/log-out">Log out</a>
-  `)
+  res.send(`<link rel="stylesheet" href="/fadi-style.css"><body class="nida"><h1 class="h1">Fadi's Profile</h1>
+  <h2 class="h2">Profile Pic</h2><div class="div"> <img class="img"></img>
+ 
+ </div>
+
+ <a class="a" href="/fadi's-posts">My Posts</a> <br>
+ <br>
+  <a class="a" href="/profiles">Back to profiles</a> <br>
+  <a class="a" href="/log-out">Log out</a>
+  `);
 });
 
 server.get("/profiles/nidaa", checkAuth, (req, res) => {
-  res.send(`<h1>Nidaa's Profile</h1>
-  <a href="/profiles">Back to profiles</a> <br>
-  <a href="/log-out">Log out</a>
-  `)
+  res.send(`
+  <link rel="stylesheet" href="/nidaa-style.css">
+  <body class="nida"><h1 class="h1">Nidaa's Profile</h1>
+  <h2 class="h2">Profile Pic</h2><div class="div"> <img class="img"></img>
+ 
+ </div>
+
+ <a class="a" href="/nidaa's-posts">My Posts</a> <br>
+ <br>
+  <a class="a" href="/profiles">Back to profiles</a> <br>
+  <a class="a" href="/log-out">Log out</a></body>
+  `);
 });
 
 server.get("/error", (req, res, next) => {
