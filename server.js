@@ -32,9 +32,10 @@ server.get("/", (req, res) => {
     );
   } else {
     res.send(`
+    <link rel="stylesheet" href="/main-style.css">
     <body>
-        <h1>Linkedin</h1>
-        <a href="/log-in">Log in</a>
+        <h1 class="FAN">FAN - Private social media website</h1>
+        <a href="/log-in" id="login">Log in</a>
         </body>
         `);
   }
@@ -42,12 +43,15 @@ server.get("/", (req, res) => {
 
 server.get("/log-in", (req, res) => {
   res.send(`
-    <h1>Log in</h1>
+  <link rel="stylesheet" href="/main-style.css">
+
+    <h1 class="FAN2">Log in</h1>
     <form action="/log-in" method="POST">
-      <label for="email">Email</email>
-      <input type="email" id="email" name="email">
+      <label for="email" class="email">Email: </label>
+      <input type="email" id="input" name="email">
      
     </form>
+  
  
   `);
 });
@@ -55,7 +59,7 @@ server.get("/log-in", (req, res) => {
 const emails = [
   "nida.abusneineh@gmail.com",
   "adan.saada11@gmail.com",
-  "fadi_makhoul1@hotmail.com ",
+  "fadi_makhoul1@hotmail.com",
 ];
 
 server.post("/log-in", (req, res) => {
@@ -63,7 +67,7 @@ server.post("/log-in", (req, res) => {
   if (emails.includes(email)) {
     const token = jwt.sign({ email }, SECRET);
     res.cookie("user", token, { maxAge: 600000 });
-    res.redirect("/profile");
+    res.redirect("/profiles");
   } else {
     res.send(`
     <h1>Please Enter a correct email</h1>
@@ -89,15 +93,37 @@ function checkAuth(req, res, next) {
   }
 }
 
-server.get("/profile", checkAuth, (req, res) => {
+server.get("/profiles", checkAuth, (req, res) => {
   const user = req.user;
   res.send(`<link rel="stylesheet" href="/style.css"> <h1 class="h">Hello ${user.email}</h1>
+  <br> 
+  <a href="/profiles/fadi">Fadi's profile</a> <br>
+  <a href="/profiles/adan">Adan's profile</a> <br>
+  <a href="/profiles/nidaa">Nidaa's profile</a> <br> <br>
+  <a href="/log-out">Log out</a>
   `);
 });
 
-server.get("/profile/settings", checkAuth, (req, res) => {
-  const user = req.user;
-  res.send(`<h1>Settings for ${user.email}</h1>`);
+
+server.get("/profiles/adan", checkAuth, (req, res) => {
+  res.send(`<h1>Adan's Profile</h1>
+  <a href="/profiles">Back to profiles</a> <br>
+  <a href="/log-out">Log out</a>
+  `)
+});
+
+server.get("/profiles/fadi", checkAuth, (req, res) => {
+  res.send(`<h1>Fadi's Profile</h1>
+  <a href="/profiles">Back to profiles</a> <br>
+  <a href="/log-out">Log out</a>
+  `)
+});
+
+server.get("/profiles/nidaa", checkAuth, (req, res) => {
+  res.send(`<h1>Nidaa's Profile</h1>
+  <a href="/profiles">Back to profiles</a> <br>
+  <a href="/log-out">Log out</a>
+  `)
 });
 
 server.get("/error", (req, res, next) => {
