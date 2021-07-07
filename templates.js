@@ -1,3 +1,4 @@
+
 function layout(content) {
   return /*html*/ `
     <!DOCTYPE html>
@@ -5,8 +6,8 @@ function layout(content) {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Nidaa's Profile</title>
-        <link rel="stylesheet" href="../nidaa-style.css">
+        <title> ana 3dan</title>
+        <link rel="stylesheet" href="../style.css">
       </head>
       <body class="student-name">
      
@@ -16,24 +17,10 @@ function layout(content) {
   `;
 }
 
-// function home(email) {
-//   if (email) {
-//     return layout(/*html */ `
-//       <h1>Welcome back ${email}</h1>
-//       <a href="/log-out">Log out</a>
-//     `);
-//   } else {
-//     return layout(/*html */ `
-//       <h1>Learn Express</h1>
-//       <a href="/log-in">Log in</a>
-//     `);
-//   }
-// }
-
 function newPost() {
   return layout(/*html */ `
     <h1 class="h1">Add a new post</h1>
-    <form action="/nida-newPost" method="POST">
+    <form action="/new-post" method="POST">
       <label class="h2" for="author">
         Your name<span aria-hidden="true">*</span>
       </label>
@@ -50,7 +37,7 @@ function newPost() {
       <br>
       <button class="btn" type="submit">Save post</button>
     </form>
-    <a href="/profiles/nida"> <button class="btn2" > Back </button></a>
+    <a href="/profiles"> <button class="btn2" > Back </button></a></script>
   `);
 }
 
@@ -62,7 +49,7 @@ function allPosts(posts, student) {
       .map(
         (post) => `
           <li>
-            <a class="a" href="/nida-posts/${post.title}">${post.title}</a>
+            <a class="a" href="/post/${post.title}">${post.title}</a>
             <a class="a" href="/delete-post/${post.title}" aria-label="Delete post titled ${post.title}">🗑</a>
           </li>
           
@@ -71,7 +58,7 @@ function allPosts(posts, student) {
       .join("")}
     </ul>
     
-    <a href="/profiles/nida"> <button class="btn1" > Back </button></a>
+    <a href="/profiles/${student.name}"> <button class="btn1" > Back </button></a>
 
   `);
 }

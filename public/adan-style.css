@@ -1,4 +1,4 @@
-.adan {
+body {
   box-sizing: border-box;
   background-image: url("pexels-cristian-dina-1851415.jpg");
   width: 100%;
@@ -42,12 +42,12 @@ a:visited {
 .div {
   display: flex;
 }
-.img {
+/* .img {
   background-size: 30vh;
-  /* background-image: url("adan.jpg"); */
+  background-image: url("adan.jpg"); 
   background-repeat: no-repeat;
   padding: 15vh;
-}
+} */
 
 .input {
   display: flex;

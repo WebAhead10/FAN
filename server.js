@@ -8,12 +8,15 @@ const { Script } = require("vm");
 const PORT = process.env.PORT || 3001;
 const SECRET = "nkA$SD89&&282hd";
 const templates = require("./templates");
-// const templatesf = require("./templates-f");
-// const templatesa = require("./templates-a");
 const server = express();
 
-//posts
-let posts = [{ author: "Nida", title: "Hi", content: "You are My Best Friend" }];
+//array of emails
+const students = [
+  { name: 'Adan', email: 'adan.saada11@gmail.com' },
+  { name: 'Fadi', email: 'fadi_makhoul1@hotmail.com' },
+  { name: 'Nidaa', email: 'nida.abusneineh@gmail.com' },
+  { name: 'Mario', email: 'mario.saliba98@gmail.com'}
+]
 
 server.use(cookieParser());
 server.use(express.urlencoded());
@@ -54,16 +57,29 @@ server.get("/log-in", (req, res) => {
     <form action="/log-in" method="POST">
       <label for="email" class="email">Email: </label>
       <input type="email" id="input" name="email">
+      <button id="clickme">Enter</button>
      
     </form>
+  <script>
+  const button = document.getElementById('clickme')
+  const email = document.getElementById('input')
   
+  button.addEventListener('click', () => {
+      fetch('/profiles')
+          .then(res => res.json())
+          .then(data => {
+              console.log(data)
+              email.textContent = data.email
+          })
+          .catch(err => {
+              // handle error
+              console.log(err)
+          })
+  })
+  </script>
  
   `);
 });
-//array of emails
-const students = [{ name: 'Adan', email: 'adan.saada11@gmail.com' },
-{ name: 'Fadi', email: 'fadi_makhoul1@hotmail.com' },
-{ name: 'Nidaa', email: 'nida.abusneineh@gmail.com' }]
 
 server.post("/log-in", (req, res) => {
   const email = req.body.email;
@@ -98,7 +114,9 @@ function checkAuth(req, res, next) {
 
 server.get("/profiles", checkAuth, (req, res) => {
   const user = req.user;
-  res.send(`<link rel="stylesheet" href="/main-style.css"> <h1 class="h1">Hello ${user.email}</h1>
+  const student = students.filter((student) => student.email === user.email)[0]
+
+  res.send(`<link rel="stylesheet" href="/main-style.css"> <h1 class="h1">Hello ${student.name} !</h1>
   <br> 
 
   ${students.map((student) => {
@@ -114,42 +132,58 @@ server.get("/profiles/:name", checkAuth, (req, res) => {
   const student = students.filter((student) => student.name === req.params.name)[0]
 
   res.send(`<link rel="stylesheet" href="/adan-style.css"><body><h1 class="h1">${student.name}'s Profile</h1>
-  <h2 class="h2">Profile Pic</h2><div class="div"> <img src="/${student.name.toLowerCase()}.jpg" class="img"></img>
+  <h2 class="h2">Profile Pic</h2><div class="div"> <img width="200" src="/${student.name.toLowerCase()}.jpg" class="img"></img>
  
     </div>
-    <a class="a" href="/${student.name}-newPost">New Post</a> <br><br>
+    <a class="a" href="/new-post">New Post</a> <br><br>
 
-    <a class="a" href="/${student.name}-posts">My Posts</a> <br>
+    <a class="a" href="/posts/${student.name}">My Posts</a> <br>
     <br>
       <a class="a" href="/profiles">Back to profiles</a> <br><br>
       <a class="a" href="/log-out">Log out</a>
   `);
 });
+//posts
+let posts = [{ author: "oli", title: "hello", content: "lorem ipsum etc" }];
 
-//Adan
 
-
-//all posts
-server.get("/:name/posts", (req, res) => {
-  const student = students.filter((student) => student.name === req.params.name)[0]
-
-  const html = templates.allPosts(posts, student);
-  res.send(html);
-});
 //new post
-server.get("/adan-newPost", (req, res) => {
+server.get("/new-post",checkAuth, (req, res) => {
   const html = templates.newPost();
   res.send(html);
 });
 
-server.post("/adan-newPost", (req, res) => {
+//all posts
+// /posts/Adan
+server.get("/posts/:name", (req, res) => {
+  // req.params.name = 'Adan'
+  // 
+
+  const student = students.filter((student) => student.name === req.params.name)[0] // { name: 'Adan', email: 'email ada' }
+
+  const filteredPosts = posts.filter((post) => {
+    return post.email === student.email
+  })
+
+  const html = templates.allPosts(filteredPosts, student);
+  res.send(html);
+});
+
+server.get('/post/:title', (req, res) => {
+  const post = posts.find((p) => p.title === req.params.title);
+  const html = templates.post(post);
+  res.send(html);
+})
+
+server.post("/new-post",checkAuth, (req, res) => {
   const newPost = req.body;
+  newPost.email=req.user.email;
   posts.push(newPost);
-  res.redirect("/adan-posts");
+  res.redirect("/profiles");
 });
 
 //posts :title
-server.get("/adan-posts/:title", (req, res) => {
+server.get("/posts/:title", (req, res) => {
   const post = posts.find((p) => p.title === req.params.title);
   const html = templates.post(post);
   res.send(html);
