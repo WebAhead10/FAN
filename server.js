@@ -194,7 +194,7 @@ server.get("/posts/:title", (req, res) => {
 });
 server.get("/delete-post/:title", (req, res) => {
   posts = posts.filter((p) => p.title !== req.params.title);
-  res.redirect("/posts/:name"");
+  res.redirect("/posts/:name");
 });
 
 server.get("/error", (req, res, next) => {
