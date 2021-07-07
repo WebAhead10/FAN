@@ -52,7 +52,7 @@ server.get("/", (req, res) => {
 
 server.get("/log-in", (req, res) => {
   res.send(`
-   <link rel="stylesheet" href="public/adan-style.css" />
+   <link rel="stylesheet" href="/main-style.css" />
 
     <h1 class="FAN2">Log in</h1>
     <form action="/log-in" method="POST">
@@ -119,7 +119,7 @@ server.get("/profiles", checkAuth, (req, res) => {
   const user = req.user;
   const student = students.filter((student) => student.email === user.email)[0]
 
-  res.send(`<link rel="stylesheet" href="/main-style.css"> <h1 class="h1">Hello ${student.name} !</h1>
+  res.send(`<link rel="stylesheet" href="/adan-style.css"> <h1 class="h1">Hello ${student.name} !</h1>
   <br> 
 
   ${students.map((student) => {
@@ -135,7 +135,7 @@ server.get("/profiles", checkAuth, (req, res) => {
 server.get("/profiles/:name", checkAuth, (req, res) => {
   const student = students.filter((student) => student.name === req.params.name)[0]
 
-  res.send(`<link rel="stylesheet" href="/adan-style.css"><body class="body"><h1 class="h1">${student.name}'s Profile</h1>
+  res.send(`<link rel="stylesheet" href="/adan-style.css"><body ><h1 class="h1">${student.name}'s Profile</h1>
   <h2 class="h2">Profile Pic</h2><div class="div"> <img width="200" src="/${student.name.toLowerCase()}.jpg" class="img"></img>
  
     </div>
@@ -202,7 +202,7 @@ server.get("/error", (req, res, next) => {
 function handleErrors(error, req, res, next) {
   console.error(error);
   const status = error.status || 500;
-  res.status(status).send(` <link rel="stylesheet" href="public/adan-style.css" /><h1 class ="h1">Something went wrong</h1>`);
+  res.status(status).send(` <link rel="stylesheet" href="/adan-style.css" /><h1 class ="h1">Something went wrong</h1>`);
 }
 
 server.use(handleErrors);
