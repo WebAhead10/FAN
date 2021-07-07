@@ -57,7 +57,7 @@ server.get("/log-in", (req, res) => {
     <form action="/log-in" method="POST">
       <label for="email" class="email">Email: </label>
       <input type="email" id="input" name="email">
-      <button id="clickme">Enter</button>
+      <button class="btn1" id="clickme">Enter</button>
      
     </form>
   <script>
@@ -89,8 +89,9 @@ server.post("/log-in", (req, res) => {
     res.redirect("/profiles");
   } else {
     res.send(`
-    <h1>Please Enter a correct email</h1>
-    <a href="/log-in">Try again</a>
+    <link rel="stylesheet" href="/adan-style.css">
+    <h1 class="h1">Please Enter a correct email</h1>
+    <a class ="a" href="/log-in">Try again</a>
   `);
   }
 });
@@ -104,8 +105,9 @@ function checkAuth(req, res, next) {
   const user = req.user;
   if (!user) {
     res.status(401).send(`
-      <h1>Please log in to view this page</h1>
-      <a href="/log-in">Log in</a>
+    <link rel="stylesheet" href="/main-style.css">
+      <h1 class="h1">Please log in to view this page</h1>
+      <a class="a" href="/log-in">Log in</a>
     `);
   } else {
     next();
@@ -120,7 +122,8 @@ server.get("/profiles", checkAuth, (req, res) => {
   <br> 
 
   ${students.map((student) => {
-    return `<a class="a" href="/profiles/${student.name}">${student.name}'s profile</a> <br><br>`
+    return `<link rel="stylesheet" href="/main-style.css">
+    <a class="a" href="/profiles/${student.name}">${student.name}'s profile</a> <br><br>`
   })}
   
   <a class="a" href="/log-out">Log out</a>
@@ -131,7 +134,7 @@ server.get("/profiles", checkAuth, (req, res) => {
 server.get("/profiles/:name", checkAuth, (req, res) => {
   const student = students.filter((student) => student.name === req.params.name)[0]
 
-  res.send(`<link rel="stylesheet" href="/adan-style.css"><body><h1 class="h1">${student.name}'s Profile</h1>
+  res.send(`<link rel="stylesheet" href="/adan-style.css"><body class="body"><h1 class="h1">${student.name}'s Profile</h1>
   <h2 class="h2">Profile Pic</h2><div class="div"> <img width="200" src="/${student.name.toLowerCase()}.jpg" class="img"></img>
  
     </div>
@@ -144,7 +147,7 @@ server.get("/profiles/:name", checkAuth, (req, res) => {
   `);
 });
 //posts
-let posts = [{ author: "oli", title: "hello", content: "lorem ipsum etc" }];
+let posts = [{ author: "FAN", title: "Welcome", content: "We are glad you are in our site" }];
 
 
 //new post
