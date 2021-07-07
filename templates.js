@@ -8,7 +8,7 @@ function layout(content) {
         <title>Nidaa's Profile</title>
         <link rel="stylesheet" href="../nidaa-style.css">
       </head>
-      <body class="nida">
+      <body class="student-name">
      
         ${content}
       </body>
@@ -54,20 +54,21 @@ function newPost() {
   `);
 }
 
-function allPosts(posts) {
+function allPosts(posts, student) {
   return layout(/*html */ `
     <h1 class ="h1">All posts</h1>
     <ul>
       ${posts
-        .map(
-          (post) => `
+      .map(
+        (post) => `
           <li>
             <a class="a" href="/nida-posts/${post.title}">${post.title}</a>
             <a class="a" href="/delete-post/${post.title}" aria-label="Delete post titled ${post.title}">🗑</a>
           </li>
+          
         `
-        )
-        .join("")}
+      )
+      .join("")}
     </ul>
     
     <a href="/profiles/nida"> <button class="btn1" > Back </button></a>
