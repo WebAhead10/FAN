@@ -36,7 +36,8 @@ server.get("/", (req, res) => {
   const user = req.user;
   if (user) {
     res.send(
-      `<h1 class="h">Hello ${user.email}</h1><a href="/log-out">Log out</a>`
+      ` <link rel="stylesheet" href="public/adan-style.css" />
+      <h1 class="h">Hello ${user.email}</h1><a href="/log-out">Log out</a>`
     );
   } else {
     res.send(`
@@ -51,7 +52,7 @@ server.get("/", (req, res) => {
 
 server.get("/log-in", (req, res) => {
   res.send(`
-  <link rel="stylesheet" href="/main-style.css">
+   <link rel="stylesheet" href="public/adan-style.css" />
 
     <h1 class="FAN2">Log in</h1>
     <form action="/log-in" method="POST">
@@ -201,7 +202,7 @@ server.get("/error", (req, res, next) => {
 function handleErrors(error, req, res, next) {
   console.error(error);
   const status = error.status || 500;
-  res.status(status).send(`<h1>Something went wrong</h1>`);
+  res.status(status).send(` <link rel="stylesheet" href="public/adan-style.css" /><h1 class ="h1">Something went wrong</h1>`);
 }
 
 server.use(handleErrors);
