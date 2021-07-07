@@ -6,8 +6,8 @@ function layout(content) {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> ana 3dan</title>
-        <link rel="stylesheet" href="../style.css">
+        <title> FAN</title>
+       <link rel="stylesheet" href="public/adan-style.css" />
       </head>
       <body class="student-name">
      
@@ -18,7 +18,7 @@ function layout(content) {
 }
 
 function newPost() {
-  return layout(/*html */ `
+  return layout(/*html */ ` <link rel="stylesheet" href="public/adan-style.css" />
     <h1 class="h1">Add a new post</h1>
     <form action="/new-post" method="POST">
       <label class="h2" for="author">
@@ -43,6 +43,7 @@ function newPost() {
 
 function allPosts(posts, student) {
   return layout(/*html */ `
+   <link rel="stylesheet" href="public/adan-style.css" />
     <h1 class ="h1">All posts</h1>
     <ul>
       ${posts
@@ -65,6 +66,7 @@ function allPosts(posts, student) {
 
 function post(post) {
   return layout(/*html */ `
+   <link rel="stylesheet" href="public/adan-style.css" />
     <h1 class="h1">${post.title}</h1>
     <textarea class="input1" id="content" name="content">${post.content}</textarea>
     <div class ="h3">Written by ${post.author}</div>
