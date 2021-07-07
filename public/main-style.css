@@ -1,61 +1,81 @@
 body {
-    /* display: flex; */
-    box-sizing: border-box;
-    background-image: url("pexels-cristian-dina-1851415.jpg");
-    width: 100%;
-    background-repeat: no-repeat;
-    background-size: cover;
+  /* display: flex; */
+  box-sizing: border-box;
+  background-image: url("pexels-cristian-dina-1851415.jpg");
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .FAN {
-    font-size: 7vh;
-    margin: 30vh 0 6vh 6vh;
-    color: rgb(80, 7, 22);
-    text-decoration: underline;
+  font-size: 7vh;
+  margin: 30vh 0 6vh 6vh;
+  color: rgb(80, 7, 22);
+  text-decoration: underline;
 }
 
-.FAN2 { 
-    font-size: 7vh;
-    margin: 30vh 0 0 6vh;
-    color: rgb(80, 7, 22);
-    text-decoration: underline;
+.FAN2 {
+  font-size: 7vh;
+  margin: 30vh 0 0 6vh;
+  color: rgb(80, 7, 22);
+  text-decoration: underline;
 }
 
 #login {
-    margin: 60vh 0 0 50vh;
-    border: solid rgb(80, 7, 22) 4px;
-    font-size : 4vh;
-    font-style: bold;
-    color: rgb(80, 7, 22);
-    background-color: rgb(235, 88, 166);
-    padding: 1.5vh;
-    border-radius: 1vh;
-
-
-
-
-
+  margin: 60vh 0 0 50vh;
+  border: solid rgb(80, 7, 22) 4px;
+  font-size: 4vh;
+  font-style: bold;
+  color: rgb(80, 7, 22);
+  background-color: rgb(235, 88, 166);
+  padding: 1.5vh;
+  border-radius: 1vh;
 }
 
 .email {
-    font-size: 2.5vw;
-    font-weight: bold;
-    margin-left: 5.5vh;
-    color: rgb(80, 7, 22);
-
+  font-size: 2.5vw;
+  font-weight: bold;
+  margin-left: 5.5vh;
+  color: rgb(80, 7, 22);
 }
 
 #input {
-    font-size: 1.4vw;
-    border: solid rgb(80, 7, 22) 3px;
-    width: 22vw;
-    padding: 0.5%;
-    border-radius: 8px;
-    background-color: rgba(158, 154, 156, 0.6);
-    margin-top: 5vh;
-    margin-left: 2vh;
+  font-size: 1.4vw;
+  border: solid rgb(80, 7, 22) 3px;
+  width: 22vw;
+  padding: 0.5%;
+  border-radius: 8px;
+  background-color: rgba(158, 154, 156, 0.6);
+  margin-top: 5vh;
+  margin-left: 2vh;
+  color: rgb(180, 38, 85);
+  font-family: "Times New Roman", Times, serif;
 }
 
-    /* 
+.h1 {
+  font-size: xx-large;
+  color: #494368;
+  background-color: rgba(199, 194, 195, 0.5);
+}
+.a {
+  color: rgb(180, 38, 85);
+
+  font-size: x-large;
+  font-weight: bold;
+  background-color: rgba(199, 194, 195, 0.6);
+  margin: 4vh;
+  padding: 0.5%;
+}
+a:link {
+  color: rgb(180, 38, 85);
+}
+a:visited {
+  color: rgb(80, 7, 22);
+}
+.a:hover {
+  background-color: rgba(179, 158, 162, 0.8);
+}
+
+/* 
 #search {
     font-size: 1.5vw;
     margin-left: -0.5em;
@@ -140,4 +160,3 @@ body {
       height: 10px;
     }
   } */
-  
