@@ -8,8 +8,8 @@ const { Script } = require("vm");
 const PORT = process.env.PORT || 3001;
 const SECRET = "nkA$SD89&&282hd";
 const templates = require("./templates");
-const templatesf = require("./templates-f");
-const templatesa = require("./templates-a");
+// const templatesf = require("./templates-f");
+// const templatesa = require("./templates-a");
 const server = express();
 
 //posts
@@ -61,15 +61,13 @@ server.get("/log-in", (req, res) => {
   `);
 });
 //array of emails
-const emails = [
-  "nida.abusneineh@gmail.com",
-  "adan.saada11@gmail.com",
-  "fadi_makhoul1@hotmail.com",
-];
+const students = [{ name: 'Adan', email: 'adan.saada11@gmail.com' },
+{ name: 'Fadi', email: 'fadi_makhoul1@hotmail.com' },
+{ name: 'Nidaa', email: 'nida.abusneineh@gmail.com' }]
 
 server.post("/log-in", (req, res) => {
   const email = req.body.email;
-  if (emails.includes(email)) {
+  if (students.map(({ email }) => email).includes(email)) {
     const token = jwt.sign({ email }, SECRET);
     res.cookie("user", token, { maxAge: 600000 });
     res.redirect("/profiles");
@@ -102,119 +100,45 @@ server.get("/profiles", checkAuth, (req, res) => {
   const user = req.user;
   res.send(`<link rel="stylesheet" href="/main-style.css"> <h1 class="h1">Hello ${user.email}</h1>
   <br> 
+
+  ${students.map((student) => {
+    return `<a class="a" href="/profiles/${student.name}">${student.name}'s profile</a> <br><br>`
+  })}
   
-  <a class="a" href="/profiles/fadi">Fadi's profile</a> <br><br>
-  <a class="a" href="/profiles/adan">Adan's profile</a> <br><br>
-  <a class="a" href="/profiles/nidaa">Nidaa's profile</a> <br> <br>
   <a class="a" href="/log-out">Log out</a>
   `);
 });
 
-server.get("/profiles/adan", checkAuth, (req, res) => {
-  res.send(`<link rel="stylesheet" href="/adan-style.css"><body class="adan"><h1 class="h1">Adan's Profile</h1>
-  <h2 class="h2">Profile Pic</h2><div class="div"> <img class="img"></img>
+
+server.get("/profiles/:name", checkAuth, (req, res) => {
+  const student = students.filter((student) => student.name === req.params.name)[0]
+
+  res.send(`<link rel="stylesheet" href="/adan-style.css"><body><h1 class="h1">${student.name}'s Profile</h1>
+  <h2 class="h2">Profile Pic</h2><div class="div"> <img src="/${student.name.toLowerCase()}.jpg" class="img"></img>
  
- </div>
- <a class="a" href="/adan-newPost">New Post</a> <br><br>
+    </div>
+    <a class="a" href="/${student.name}-newPost">New Post</a> <br><br>
 
- <a class="a" href="/adan-posts">My Posts</a> <br>
- <br>
-  <a class="a" href="/profiles">Back to profiles</a> <br><br>
-  <a class="a" href="/log-out">Log out</a>
+    <a class="a" href="/${student.name}-posts">My Posts</a> <br>
+    <br>
+      <a class="a" href="/profiles">Back to profiles</a> <br><br>
+      <a class="a" href="/log-out">Log out</a>
   `);
-});
-
-server.get("/profiles/fadi", checkAuth, (req, res) => {
-  res.send(`<link rel="stylesheet" href="/fadi-style.css"><body class="fadi"><h1 class="h1">Fadi's Profile</h1>
-  <h2 class="h2">Profile Pic</h2><div class="div"> <img class="img" ></img>
- 
- </div>
- <a class="a" href="/fadi-newPost">New Post</a> <br><br>
- <a class="a" href="/fadi-posts">My Posts</a> <br>
- <br>
-  <a class="a" href="/profiles">Back to profiles</a> <br><br>
-  <a class="a" href="/log-out">Log out</a>
-  `);
-});
-
-server.get("/profiles/nidaa", checkAuth, (req, res) => {
-  res.send(`
-  <link rel="stylesheet" href="/nidaa-style.css">
-  <body class="nida"><h1 class="h1">Nidaa's Profile</h1>
-  <h2 class="h2">Profile Pic</h2><div class="div"> <img class="img"></img>
- 
- </div>
- <a class="a" href="/nida-newPost">New Post</a> <br>
- <br>
- <a class="a" href="/nida-posts">My Posts</a> <br>
- <br>
-  <a class="a" href="/profiles">Back to profiles</a> <br><br>
-  <a class="a" href="/log-out">Log out</a></body>
-  `);
-});
-
-//Nida
-//all posts
-server.get("/nida-posts", (req, res) => {
-  const html = templates.allPosts(posts);
-  res.send(html);
-});
-//new post
-server.get("/nida-newPost", (req, res) => {
-  const html = templates.newPost();
-  res.send(html);
-});
-
-server.post("/nida-newPost", (req, res) => {
-  const newPost = req.body;
-  posts.push(newPost);
-  res.redirect("/nida-posts");
-});
-
-//posts :title
-server.get("/nida-posts/:title", (req, res) => {
-  const post = posts.find((p) => p.title === req.params.title);
-  const html = templates.post(post);
-  res.send(html);
-});
-
-// Fadi
-
-//all posts
-server.get("/fadi-posts", (req, res) => {
-  const html = templatesf.allPosts(posts);
-  res.send(html);
-});
-//new post
-server.get("/fadi-newPost", (req, res) => {
-  const html = templatesf.newPost();
-  res.send(html);
-});
-
-server.post("/fadi-newPost", (req, res) => {
-  const newPost = req.body;
-  posts.push(newPost);
-  res.redirect("/fadi-posts");
-});
-
-//posts :title
-server.get("/fadi-posts/:title", (req, res) => {
-  const post = posts.find((p) => p.title === req.params.title);
-  const html = templatesf.post(post);
-  res.send(html);
 });
 
 //Adan
 
 
 //all posts
-server.get("/adan-posts", (req, res) => {
-  const html = templatesa.allPosts(posts);
+server.get("/:name/posts", (req, res) => {
+  const student = students.filter((student) => student.name === req.params.name)[0]
+
+  const html = templates.allPosts(posts, student);
   res.send(html);
 });
 //new post
 server.get("/adan-newPost", (req, res) => {
-  const html = templatesa.newPost();
+  const html = templates.newPost();
   res.send(html);
 });
 
@@ -227,7 +151,7 @@ server.post("/adan-newPost", (req, res) => {
 //posts :title
 server.get("/adan-posts/:title", (req, res) => {
   const post = posts.find((p) => p.title === req.params.title);
-  const html = templatesa.post(post);
+  const html = templates.post(post);
   res.send(html);
 });
 
