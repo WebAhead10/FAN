@@ -1,4 +1,5 @@
 body {
+  /* display: flex; */
   box-sizing: border-box;
   background-image: url("pexels-cristian-dina-1851415.jpg");
   width: 100%;
@@ -105,7 +106,27 @@ a:visited {
   font-weight: bold;
   color: rgb(180, 38, 85);
 }
-.btn1:hover {
-  background-color: rgba(158, 154, 156, 0.8);
-  cursor: pointer;
-}
+
+  .btn1:hover {
+    background-color: rgba(158, 154, 156, 0.8);
+    cursor: pointer;
+  }
+  .btn2 {
+    font-size: 1.4vw;
+    border: solid rgb(80, 7, 22) 3px;
+    width: 9vw;
+    padding: 0.5%;
+    border-radius: 8px;
+    background-color: rgba(199, 194, 195, 0.8);
+    margin-top: 4vh;
+    margin-left: 2vh;
+    font-family: "Times New Roman", Times, serif;
+    font-size: x-large;
+    font-weight: bold;
+    color: rgb(180, 38, 85);
+  }
+  .btn2:hover {
+    background-color: rgba(158, 154, 156, 0.8);
+    cursor: pointer;
+  }
+  
