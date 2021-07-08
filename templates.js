@@ -1,4 +1,3 @@
-
 function layout(content) {
   return /*html*/ `
     <!DOCTYPE html>
@@ -7,7 +6,7 @@ function layout(content) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> FAN</title>
-       <link rel="stylesheet" href="/adan-style.css" />
+       <link rel="stylesheet" href="/main-style.css" />
       </head>
       <body class="student-name">
      
@@ -17,10 +16,10 @@ function layout(content) {
   `;
 }
 
-function newPost() {
-  return layout(/*html */ ` <link rel="stylesheet" href="/adan-style.css" />
+function newPost(name) {
+  return layout(/*html */ ` <link rel="stylesheet" href="/main-style.css" />
     <h1 class="h1">Add a new post</h1>
-    <form action="/new-post" method="POST">
+    <form action="/new-post/${name}" method="POST">
       <label class="h2" for="author">
         Your name<span aria-hidden="true">*</span>
       </label>
@@ -43,30 +42,32 @@ function newPost() {
 
 function allPosts(posts, student) {
   return layout(/*html */ `
-   <link rel="stylesheet" href="/adan-style.css" />
+   <link rel="stylesheet" href="/main-style.css" />
     <h1 class ="h1">All posts</h1>
     <ul>
       ${posts
-      .map(
-        (post) => `
+        .map(
+          (post) => `
           <li>
             <a class="a" href="/post/${post.title}">${post.title}</a>
             <a class="a" href="/delete-post/${post.title}" aria-label="Delete post titled ${post.title}">🗑</a>
           </li>
           
         `
-      )
-      .join("")}
+        )
+        .join("")}
     </ul>
     
-    <a href="/profiles/${student.name}"> <button class="btn1" > Back </button></a>
+    <a href="/profiles/${
+      student.name
+    }"> <button class="btn1" > Back </button></a>
 
   `);
 }
 
 function post(post) {
   return layout(/*html */ `
-   <link rel="stylesheet" href="public/adan-style.css" />
+   <link rel="stylesheet" href="/main-style.css" />
     <h1 class="h1">${post.title}</h1>
     <textarea class="input1" id="content" name="content">${post.content}</textarea>
     <div class ="h3">Written by ${post.author}</div>
