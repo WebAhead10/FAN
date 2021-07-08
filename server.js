@@ -12,11 +12,11 @@ const server = express();
 
 //array of emails
 const students = [
-  { name: 'Adan', email: 'adan.saada11@gmail.com' },
-  { name: 'Fadi', email: 'fadi_makhoul1@hotmail.com' },
-  { name: 'Nidaa', email: 'nida.abusneineh@gmail.com' },
-  { name: 'Mario', email: 'mario.saliba98@gmail.com'}
-]
+  { name: "Adan", email: "adan.saada11@gmail.com" },
+  { name: "Fadi", email: "fadi_makhoul1@hotmail.com" },
+  { name: "Nidaa", email: "nida.abusneineh@gmail.com" },
+  { name: "Mario", email: "mario.saliba98@gmail.com" },
+];
 
 server.use(cookieParser());
 server.use(express.urlencoded());
@@ -117,29 +117,34 @@ function checkAuth(req, res, next) {
 
 server.get("/profiles", checkAuth, (req, res) => {
   const user = req.user;
-  const student = students.filter((student) => student.email === user.email)[0]
+  const student = students.filter((student) => student.email === user.email)[0];
 
-  res.send(`<link rel="stylesheet" href="/adan-style.css"> <h1 class="h1">Hello ${student.name} !</h1>
+  res.send(`<link rel="stylesheet" href="/adan-style.css"> <h1 class="h1">Hello ${
+    student.name
+  } !</h1>
   <br> 
 
   ${students.map((student) => {
     return `<link rel="stylesheet" href="/main-style.css">
-    <a class="a" href="/profiles/${student.name}">${student.name}'s profile</a> <br><br>`
+    <a class="a" href="/profiles/${student.name}">${student.name}'s profile</a> <br><br>`;
   })}
   
   <a class="a" href="/log-out">Log out</a>
   `);
 });
 
-
 server.get("/profiles/:name", checkAuth, (req, res) => {
-  const student = students.filter((student) => student.name === req.params.name)[0]
+  const student = students.filter(
+    (student) => student.name === req.params.name
+  )[0];
 
-  res.send(`<link rel="stylesheet" href="/adan-style.css"><body ><h1 class="h1">${student.name}'s Profile</h1>
+  res.send(`<link rel="stylesheet" href="/adan-style.css"><body ><h1 class="h1">${
+    student.name
+  }'s Profile</h1>
   <h2 class="h2">Profile Pic</h2><div class="div"> <img width="200" src="/${student.name.toLowerCase()}.jpg" class="img"></img>
  
     </div>
-    <a class="a" href="/new-post">New Post</a> <br><br>
+    <a class="a" href="/new-post/${student.name}">New Post</a> <br><br>
 
     <a class="a" href="/posts/${student.name}">My Posts</a> <br>
     <br>
@@ -148,35 +153,46 @@ server.get("/profiles/:name", checkAuth, (req, res) => {
   `);
 });
 //posts
-let posts = [{ author: "FAN", title: "Welcome", content: "We are glad you are in our site" }];
-
+let posts = [
+  {
+    author: "FAN",
+    title: "Welcome",
+    content: "We are glad you are in our site",
+  },
+];
 
 //new post
-server.get("/new-post",checkAuth, (req, res) => {
-  const html = templates.newPost();
+server.get("/new-post/:name", checkAuth, (req, res) => {
+  const html = templates.newPost(req.params.name);
   res.send(html);
 });
 
 //all posts
 server.get("/posts/:name", (req, res) => {
-  const student = students.filter((student) => student.name === req.params.name)[0] // { name: 'Adan', email: 'email ada' }
+  const student = students.filter(
+    (student) => student.name === req.params.name
+  )[0]; // { name: 'Adan', email: 'email ada' }
   const filteredPosts = posts.filter((post) => {
-  return post.email === student.email
-  })
+    return post.email === student.email;
+  });
 
   const html = templates.allPosts(filteredPosts, student);
   res.send(html);
 });
 
-server.get('/post/:title', (req, res) => {
+server.get("/post/:title", (req, res) => {
   const post = posts.find((p) => p.title === req.params.title);
   const html = templates.post(post);
   res.send(html);
-})
+});
 
-server.post("/new-post",checkAuth, (req, res) => {
+server.post("/new-post/:name", checkAuth, (req, res) => {
   const newPost = req.body;
-  newPost.email=req.user.email;
+  const student = students.filter(
+    (student) => student.name === req.params.name
+  )[0];
+
+  newPost.email = student.email;
   posts.push(newPost);
   res.redirect("/profiles");
 });
@@ -189,8 +205,10 @@ server.get("/posts/:title", (req, res) => {
 });
 server.get("/delete-post/:title", (req, res) => {
   posts = posts.filter((p) => p.title !== req.params.title);
-  const student = students.filter((student) => student.email === req.user.email)[0] 
-  const name= student.name;
+  const student = students.filter(
+    (student) => student.email === req.user.email
+  )[0];
+  const name = student.name;
   res.redirect(`/posts/${name}`);
 });
 
@@ -203,7 +221,11 @@ server.get("/error", (req, res, next) => {
 function handleErrors(error, req, res, next) {
   console.error(error);
   const status = error.status || 500;
-  res.status(status).send(` <link rel="stylesheet" href="/adan-style.css" /><h1 class ="h1">Something went wrong</h1>`);
+  res
+    .status(status)
+    .send(
+      ` <link rel="stylesheet" href="/adan-style.css" /><h1 class ="h1">Something went wrong</h1>`
+    );
 }
 
 server.use(handleErrors);

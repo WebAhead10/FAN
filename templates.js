@@ -17,10 +17,10 @@ function layout(content) {
   `;
 }
 
-function newPost() {
+function newPost(name) {
   return layout(/*html */ ` <link rel="stylesheet" href="/adan-style.css" />
     <h1 class="h1">Add a new post</h1>
-    <form action="/new-post" method="POST">
+    <form action="/new-post/${name}" method="POST">
       <label class="h2" for="author">
         Your name<span aria-hidden="true">*</span>
       </label>
