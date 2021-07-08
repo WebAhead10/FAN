@@ -188,7 +188,8 @@ server.get("/posts/:name", (req, res) => {
 
 server.get("/post/:title", (req, res) => {
   const post = posts.find((p) => p.title === req.params.title);
-  const html = templates.post(post);
+  const html = templates.post(post,req.user.name);
+  
   res.send(html);
 });
 

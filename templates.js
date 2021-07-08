@@ -65,12 +65,12 @@ function allPosts(posts, student) {
   `);
 }
 
-function post(post) {
+function post(post,user) {
   return layout(/*html */ `
    <link rel="stylesheet" href="/main-style.css" />
     <h1 class="h1">${post.title}</h1>
     <textarea class="input1" id="content" name="content">${post.content}</textarea>
-    <div class ="h3">Written by ${post.author}</div>
+    <div class ="h3">Written by ${user}</div>
   `);
 }
 
