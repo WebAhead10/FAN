@@ -16,14 +16,14 @@ function layout(content) {
   `;
 }
 
-function newPost(name) {
+function newPost(name, user) {
   return layout(/*html */ ` <link rel="stylesheet" href="/main-style.css" />
     <h1 class="h1">Add a new post</h1>
     <form action="/new-post/${name}" method="POST">
       <label class="h2" for="author">
         Your name<span aria-hidden="true">*</span>
-      </label>
-      <input class="input" id="author" type="text" name="author" required>
+      </label><br>
+      <label class="h2" for="author">${user}</label>
       <br>
       <label class="h2" for="title">
         Post title<span aria-hidden="true">*</span>

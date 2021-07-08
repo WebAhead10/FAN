@@ -58,12 +58,15 @@ server.get("/log-in", (req, res) => {
     <form action="/log-in" method="POST">
       <label for="email" class="email">Email: </label>
       <input type="email" id="input" name="email">
+  
+      <label class="h2" for="name" class="name">Name: </label>
+      <input id="input" type="text" id="name" name="name">
       <button class="btn1" id="clickme">Enter</button>
-     
     </form>
   <script>
   const button = document.getElementById('clickme')
   const email = document.getElementById('input')
+  const name =document.getElementById('name')
   
   button.addEventListener('click', () => {
       fetch('/profiles')
@@ -71,6 +74,7 @@ server.get("/log-in", (req, res) => {
           .then(data => {
               console.log(data)
               email.textContent = data.email
+              name.textContent = data.name
           })
           .catch(err => {
               // handle error
@@ -84,8 +88,10 @@ server.get("/log-in", (req, res) => {
 
 server.post("/log-in", (req, res) => {
   const email = req.body.email;
-  if (students.map(({ email }) => email).includes(email)) {
-    const token = jwt.sign({ email }, SECRET);
+  const name = req.body.name;
+
+  if (students.map(({ email, name }) => email).includes(email, name)) {
+    const token = jwt.sign({ email, name }, SECRET);
     res.cookie("user", token, { maxAge: 600000 });
     res.redirect("/profiles");
   } else {
@@ -163,7 +169,7 @@ let posts = [
 
 //new post
 server.get("/new-post/:name", checkAuth, (req, res) => {
-  const html = templates.newPost(req.params.name);
+  const html = templates.newPost(req.params.name, req.user.name);
   res.send(html);
 });
 
@@ -193,6 +199,7 @@ server.post("/new-post/:name", checkAuth, (req, res) => {
   )[0];
 
   newPost.email = student.email;
+
   posts.push(newPost);
   res.redirect("/profiles");
 });
