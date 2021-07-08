@@ -158,15 +158,10 @@ server.get("/new-post",checkAuth, (req, res) => {
 });
 
 //all posts
-// /posts/Adan
 server.get("/posts/:name", (req, res) => {
-  // req.params.name = 'Adan'
-  // 
-
   const student = students.filter((student) => student.name === req.params.name)[0] // { name: 'Adan', email: 'email ada' }
-
   const filteredPosts = posts.filter((post) => {
-    return post.email === student.email
+  return post.email === student.email
   })
 
   const html = templates.allPosts(filteredPosts, student);
@@ -194,7 +189,9 @@ server.get("/posts/:title", (req, res) => {
 });
 server.get("/delete-post/:title", (req, res) => {
   posts = posts.filter((p) => p.title !== req.params.title);
-  res.redirect("/posts/:name");
+  const student = students.filter((student) => student.email === req.user.email)[0] 
+  const name= student.name;
+  res.redirect(`/posts/${name}`);
 });
 
 server.get("/error", (req, res, next) => {
