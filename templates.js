@@ -23,18 +23,18 @@ function newPost(name, user) {
       <label class="h2" for="author">
         Your name<span aria-hidden="true">*</span>
       </label><br>
-      <label class="h2" for="author">${user}</label>
+      <label class="h4" for="author">${user}</label>
       <br>
       <label class="h2" for="title">
         Post title<span aria-hidden="true">*</span>
       </label>
-     
-      <input class="input" id="title" type="text" name="title" required>
+     <br>
+      <input class="input" id="input1" type="text" name="title" required>
       <br>
       <label class="h2" for="content">Post content</label>
-      <textarea class="input" id="content" name="content"></textarea>
+<br>      <textarea id="input1" id="content" name="content"></textarea>
       <br>
-      <button class="btn" type="submit">Save post</button>
+      <button class="btn1" type="submit">Save post</button>
     </form>
     <a href="/profiles"> <button class="btn2" > Back </button></a></script>
   `);
