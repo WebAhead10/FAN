@@ -42,12 +42,6 @@ a:visited {
 .div {
   display: flex;
 }
-/* .img {
-  background-size: 30vh;
-  background-image: url("adan.jpg"); 
-  background-repeat: no-repeat;
-  padding: 15vh;
-} */
 
 .input {
   display: flex;
