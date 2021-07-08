@@ -36,7 +36,7 @@ server.get("/", (req, res) => {
   const user = req.user;
   if (user) {
     res.send(
-      ` <link rel="stylesheet" href="public/adan-style.css" />
+      ` <link rel="stylesheet" href="/main-style.css" />
       <h1 class="h">Hello ${user.email}</h1><a href="/log-out">Log out</a>`
     );
   } else {
@@ -90,7 +90,7 @@ server.post("/log-in", (req, res) => {
     res.redirect("/profiles");
   } else {
     res.send(`
-    <link rel="stylesheet" href="/adan-style.css">
+    <link rel="stylesheet" href="/main-style.css">
     <h1 class="h1">Please Enter a correct email</h1>
     <a class ="a" href="/log-in">Try again</a>
   `);
@@ -119,7 +119,7 @@ server.get("/profiles", checkAuth, (req, res) => {
   const user = req.user;
   const student = students.filter((student) => student.email === user.email)[0];
 
-  res.send(`<link rel="stylesheet" href="/adan-style.css"> <h1 class="h1">Hello ${
+  res.send(`<link rel="stylesheet" href="/main-style.css"> <h1 class="h1">Hello ${
     student.name
   } !</h1>
   <br> 
@@ -138,7 +138,7 @@ server.get("/profiles/:name", checkAuth, (req, res) => {
     (student) => student.name === req.params.name
   )[0];
 
-  res.send(`<link rel="stylesheet" href="/adan-style.css"><body ><h1 class="h1">${
+  res.send(`<link rel="stylesheet" href="/main-style.css"><body ><h1 class="h1">${
     student.name
   }'s Profile</h1>
   <h2 class="h2">Profile Pic</h2><div class="div"> <img width="200" src="/${student.name.toLowerCase()}.jpg" class="img"></img>
@@ -224,7 +224,7 @@ function handleErrors(error, req, res, next) {
   res
     .status(status)
     .send(
-      ` <link rel="stylesheet" href="/adan-style.css" /><h1 class ="h1">Something went wrong</h1>`
+      ` <link rel="stylesheet" href="/main-style.css" /><h1 class ="h1">Something went wrong</h1>`
     );
 }
 
